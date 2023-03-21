@@ -55,6 +55,20 @@ def test_daily_max_nan():
     npt.assert_array_equal(daily_max(test_input), test_result)
 
 
+
+@pytest.mark.parametrize(
+    "test, expected",
+    [
+        ([ [np.nan, 2], [3, 4], [5, 6] ], [np.nan, 6]),
+        ([ [5, 2], [3, 4], [5, 6] ], [5, 6]),
+        ([ [22, 2], [3, 4], [5, 6]], [22, 6]),
+    ])
+def test_daily_max(test, expected):
+    """Test mean function works for array of zeroes and positive integers."""
+    from inflammation.models import daily_max
+    npt.assert_array_equal(daily_max(np.array(test)), np.array(expected))
+
+
 def test_daily_min_string():
     """Test for TypeError when passing strings"""
     from inflammation.models import daily_min

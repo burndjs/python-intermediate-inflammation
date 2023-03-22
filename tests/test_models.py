@@ -75,3 +75,16 @@ def test_daily_min_string():
 
     with pytest.raises(TypeError):
         error_expected = daily_min([['Hello', 'there'], ['General', 'Kenobi']])
+
+
+@pytest.mark.parametrize(
+    "test, expected",
+    [
+        ([ [1, 2], [1, 2], [1, 2] ], [0., 0.]),
+        ([ [0, 0], [0, 0], [0, 0] ], [0., 0.]),
+        ([ [-1, -2], [np.nan, -2], [-1, -2]], [np.nan, 0.]),
+    ])
+def test_daily_std(test, expected):
+    """Test mean function works for array of zeroes and positive integers."""
+    from inflammation.models import daily_std_dev
+    npt.assert_array_equal(daily_std_dev(np.array(test)), np.array(expected))
